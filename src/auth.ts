@@ -4,15 +4,16 @@ import NextAuth from "next-auth";
 // import type { NextAuthConfig } from "next-auth";
 
 import Google from "next-auth/providers/google";
-import Facebook from "next-auth/providers/facebook";
-import Instagram from "next-auth/providers/instagram";
+// import Facebook from "next-auth/providers/facebook";
+// import Instagram from "next-auth/providers/instagram";
 // import Resend from "next-auth/providers/resend";
 
 import bcrypt from "bcryptjs";
 
 import Credentials from "next-auth/providers/credentials";
-import UserModel from "./models/user";
+import { UserModel } from "./models/user";
 import dbConnect from "./lib/dbConnect";
+import { verifyCode, verifyCodeExpiryTime } from "./lib/verifyCode";
 
 // import authConfig from "./auth.config";
 // import mongoClient from "./lib/db";
@@ -21,15 +22,9 @@ import dbConnect from "./lib/dbConnect";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   // adapter: MongoDBAdapter(mongoClient),
   providers: [
-    Google({
-      clientId: process.env.AUTH_GOOGLE_ID,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET,
-    }),
-    Facebook({
-      clientId: process.env.AUTH_FACEBOOK_ID,
-      clientSecret: process.env.AUTH_FACEBOOK_SECRET,
-    }),
-    Instagram,
+    Google,
+    // Facebook,
+    // Instagram,
     // Resend,
     Credentials({
       credentials: {
@@ -52,7 +47,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             !user ||
             !(await bcrypt.compare(
               credentials.password!.toString(),
-              user.password
+              user.password!
             ))
           ) {
             throw new Error("Invalid credentials");
@@ -88,15 +83,58 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async signIn({ user, account, profile }) {
-      if (account!.provider === "instagram") {
-        console.log("login with facebook");
-        console.log(user);
+      try {
+        console.log("Sign-in callback triggered");
+
+        if (!account) {
+          console.log("No account information provided.");
+          return false;
+        }
+        console.log("Account provider:", account.provider);
+
+        // If the account provider is not credentials, we treat it as a social login
+        if (
+          account.provider === "google" ||
+          account.provider === "instagram" ||
+          account.provider === "facebook"
+        ) {
+          console.log("Using social provider:", account.provider);
+
+          await dbConnect();
+          console.log("Connected to database");
+
+          // Check if user already exists
+          const existingUser = await UserModel.findOne({ email: user.email });
+          console.log("Existing user found:", existingUser);
+
+          if (existingUser) {
+            console.log("User already exists, skipping creation.");
+            return true; // User exists, continue sign-in
+          }
+
+          // If user doesn’t exist, create a new one
+          console.log("Creating new user for social login");
+
+          const newUser = new UserModel({
+            profilePic: user.image,
+            email: user.email,
+            userName: user.name || `user_${verifyCode}`,
+            verifyCode,
+            verifyCodeExpiry: verifyCodeExpiryTime,
+            authType: account.provider,
+          });
+
+          await newUser.save();
+          console.log("New user created:", newUser);
+        } else {
+          console.log("Sign-in with credentials provider.");
+        }
+
+        return true; // Allow sign-in
+      } catch (error) {
+        console.error("Error during sign-in callback:", error);
+        return false; // Deny sign-in on error
       }
-      if (account!.provider === "google") {
-        console.log("login with google.image");
-        console.log(user);
-      }
-      return true;
     },
 
     async jwt({ token, user }) {

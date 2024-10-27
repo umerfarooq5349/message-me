@@ -4,36 +4,47 @@ import {
   Head,
   Heading,
   Html,
+  Link,
   Preview,
   Section,
   Text,
+  Button,
 } from "@react-email/components";
 
-interface VerificationEmailProps {
-  username: string;
-  verifyCode: string;
-}
+// interface VerificationEmailProps {
+//   username: string;
+//   verifyCode: string;
+// }
 
-function VerificationEmail({ username, verifyCode }: VerificationEmailProps) {
+function VerificationEmail(userName: string, verifyCode: string) {
   return (
     <Html>
       <Head />
       <Preview>Sign in to jobaccepted.com</Preview>
       <Body style={main}>
         <Container style={container}>
-          <Text style={company}>Message Me</Text>
-          <Heading style={codeTitle}>Hey {username},</Heading>
-          <Text style={codeDescription}>Your verification code</Text>
+          <Text style={company}>Job Accepted</Text>
+          <Text style={company}>Hey {userName}</Text>
+          <Heading style={codeTitle}>Your verification code</Heading>
           <Text style={codeDescription}>
-            Enter it in your open browser window. This code will expire in 30
-            minutes.
+            Enter it in your open browser window or press the sign in button.
+            This code will expire in 15 minutes.
           </Text>
           <Section style={codeContainer}>
             <Heading style={codeStyle}>{verifyCode}</Heading>
           </Section>
-
+          <Section style={buttonContainer}>
+            <Button href="https://www.jobaccepted.com/" style={button}>
+              Sign in
+            </Button>
+          </Section>
+          <Text style={paragraph}>Not expecting this email?</Text>
           <Text style={paragraph}>
-            Not expecting this email? Simply ignore it.
+            Contact{" "}
+            <Link href="mailto:support@jobaccepted.com" style={link}>
+              support@jobaccepted.com
+            </Link>{" "}
+            if you did not request this code.
           </Text>
         </Container>
       </Body>
@@ -94,10 +105,30 @@ const codeStyle = {
   letterSpacing: "8px",
 };
 
+const buttonContainer = {
+  margin: "27px auto",
+  width: "auto",
+};
+
+const button = {
+  backgroundColor: "#5e6ad2",
+  borderRadius: "3px",
+  fontWeight: "600",
+  color: "#fff",
+  textAlign: "center" as const,
+  padding: "12px 24px",
+  margin: "0 auto",
+};
+
 const paragraph = {
   color: "#444",
   letterSpacing: "0",
   padding: "0 40px",
   margin: "0",
   textAlign: "center" as const,
+};
+
+const link = {
+  color: "#444",
+  textDecoration: "underline",
 };

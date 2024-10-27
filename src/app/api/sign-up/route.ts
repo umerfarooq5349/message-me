@@ -1,70 +1,102 @@
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 import dbConnect from "@/lib/dbConnect";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import UserModel from "@/models/user";
+import { UserModel } from "@/models/user";
 
 export async function POST(request: NextRequest) {
   await dbConnect();
   try {
-    const { userName, email, password } = await request.json();
-    // hash the password
+    const { userName, email, password, authType } = await request.json();
+
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 12);
-    // generate 6 digit random number
-    const verifyCode = Math.floor(10000 + Math.random() * 90000).toString();
-    // add 30 minutes from now own for verify code validity
+
+    // Generate 6-digit random verification code
+    const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Set verification code expiration time (30 minutes from now)
     const verifyCodeExpiryTime = new Date();
     verifyCodeExpiryTime.setMinutes(verifyCodeExpiryTime.getMinutes() + 30);
-    // check user is verified with username and email
-    const exitingUserByUserName = await UserModel.findOne({
+
+    // Check if username is already taken and user allows messaging
+    const existingUserByUserName = await UserModel.findOne({
       userName,
       isAcceptingMessage: true,
     });
-    if (exitingUserByUserName) {
-      return Response.json(
+    if (existingUserByUserName) {
+      return NextResponse.json(
         {
-          statue: false,
-          message: "User name is not available):",
+          status: false,
+          message: "Username is not available.",
         },
         { status: 403 }
       );
     }
 
-    // check user by email
+    // Check if user already exists by email
     const existingUserWithEmail = await UserModel.findOne({ email });
     if (existingUserWithEmail) {
-      if (existingUserWithEmail.isverified) {
-        return Response.json(
+      // If user is already verified
+      if (existingUserWithEmail.isVerified) {
+        return NextResponse.json(
           {
-            statue: false,
-            message: "Email already exists):",
+            status: false,
+            message: "Email already exists.",
           },
           { status: 403 }
         );
       }
 
+      // Update existing user's details
       existingUserWithEmail.password = hashedPassword;
       existingUserWithEmail.verifyCode = verifyCode;
       existingUserWithEmail.verifyCodeExpiry = verifyCodeExpiryTime;
+      existingUserWithEmail.authType = authType;
       await existingUserWithEmail.save();
+      // Send verification email
+      try {
+        await sendVerificationEmail(userName, verifyCode, email);
+        console.log(
+          "Verification ekjfhiewewoid\n\n\n\nmail sent successfully."
+        );
+      } catch (error) {
+        console.error("Failed to send verification email:", error);
+      }
     } else {
-      //new user
+      // Create a new user
       const newUser = new UserModel({
         email,
         password: hashedPassword,
         verifyCodeExpiry: verifyCodeExpiryTime,
         verifyCode,
+        authType,
+        userName,
       });
-
       await newUser.save();
+      // Send verification email
+      try {
+        await sendVerificationEmail(userName, verifyCode, email);
+        console.log("Verification email sent successfully.");
+      } catch (error) {
+        console.error("Failed to send verification email:", error);
+      }
+
+      // Respond with success message for new user
+      return NextResponse.json(
+        {
+          status: true,
+          message: "Signup successful! Please verify your email.",
+        },
+        { status: 201 }
+      );
     }
-    await sendVerificationEmail(userName, verifyCode, email);
   } catch (error) {
-    console.error("Signup failed): ", error);
-    return Response.json(
+    console.error("Signup failed:", error);
+    return NextResponse.json(
       {
-        statue: false,
-        message: "Signup failed):",
+        status: false,
+        message: "Signup failed due to an internal error.",
       },
       { status: 500 }
     );

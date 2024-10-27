@@ -1,20 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { BlobOptions } from "buffer";
-import mongoose, { Schema, Document } from "mongoose";
-import { Message, MessageSchema } from "./Message";
+import mongoose, { Schema, Document, Model } from "mongoose";
+import { MessageSchema } from "./Message";
 
+// Define the User interface
 export interface User extends Document {
   userName: string;
   email: string;
   password: string;
   verifyCode: string;
   verifyCodeExpiry: Date;
-  isAcceptingMessage: boolean;
-  isverified: boolean;
-  messages: Message[];
+  isVerified: boolean;
+  isAcceptingMessages: boolean;
+  messages: (typeof MessageSchema)[];
+  authType: string;
+  profilePic: string;
 }
 
-const UserSchema: Schema<User> = new Schema({
+// Define the User schema
+const UserSchema = new Schema<User>({
   userName: {
     type: String,
     required: [true, "User Name is required"],
@@ -31,7 +34,9 @@ const UserSchema: Schema<User> = new Schema({
   },
   password: {
     type: String,
-    required: [true, "Password is required"],
+    required: function (this: User) {
+      return this.authType === "credentials";
+    },
   },
   email: {
     type: String,
@@ -39,13 +44,19 @@ const UserSchema: Schema<User> = new Schema({
     unique: true,
     match: [/.+\@.+\..+/, "Please enter a valid email address"],
   },
-  isverified: { type: Boolean, default: false },
-  isAcceptingMessage: { type: Boolean, default: true },
+  profilePic: {
+    type: String,
+  },
+  authType: {
+    type: String,
+    required: [true, "Auth type is required"],
+    enum: ["credentials", "google", "instagram", "facebook"],
+  },
+  isVerified: { type: Boolean, default: false },
+  isAcceptingMessages: { type: Boolean, default: true },
   messages: [MessageSchema],
 });
 
-const UserModel =
-  (mongoose.models.User as mongoose.Model<User>) ||
-  mongoose.model<User>("User", UserSchema);
-
-export default UserModel;
+// Create the User model
+export const UserModel: Model<User> =
+  mongoose.models.User || mongoose.model<User>("User", UserSchema);
