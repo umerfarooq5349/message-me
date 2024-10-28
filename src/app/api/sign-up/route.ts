@@ -1,8 +1,9 @@
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 import dbConnect from "@/lib/dbConnect";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import bcrypt from "bcryptjs";
 import { UserModel } from "@/models/user";
+import { sendResponce } from "@/lib/sendResponce";
 
 export async function POST(request: NextRequest) {
   await dbConnect();
@@ -25,13 +26,7 @@ export async function POST(request: NextRequest) {
       isAcceptingMessage: true,
     });
     if (existingUserByUserName) {
-      return NextResponse.json(
-        {
-          status: false,
-          message: "Username is not available.",
-        },
-        { status: 403 }
-      );
+      return sendResponce(false, "Username is not available.", 403);
     }
 
     // Check if user already exists by email
@@ -39,13 +34,7 @@ export async function POST(request: NextRequest) {
     if (existingUserWithEmail) {
       // If user is already verified
       if (existingUserWithEmail.isVerified) {
-        return NextResponse.json(
-          {
-            status: false,
-            message: "Email already exists.",
-          },
-          { status: 403 }
-        );
+        return sendResponce(false, "Email already exists.", 403);
       }
 
       // Update existing user's details
@@ -83,22 +72,14 @@ export async function POST(request: NextRequest) {
       }
 
       // Respond with success message for new user
-      return NextResponse.json(
-        {
-          status: true,
-          message: "Signup successful! Please verify your email.",
-        },
-        { status: 201 }
+      return sendResponce(
+        true,
+        "Signup successful! Please verify your email.",
+        201
       );
     }
   } catch (error) {
     console.error("Signup failed:", error);
-    return NextResponse.json(
-      {
-        status: false,
-        message: "Signup failed due to an internal error.",
-      },
-      { status: 500 }
-    );
+    return sendResponce(false, "Signup failed due to an internal error.", 500);
   }
 }

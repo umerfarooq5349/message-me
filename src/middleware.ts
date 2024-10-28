@@ -13,7 +13,9 @@ export async function middleware(request: NextRequest) {
   });
   const url = request.nextUrl;
 
-  // console.log(token);
+  console.log(
+    `i'm in middlwarre befor you actualy visit your required endpoint`
+  );
   // Redirect to dashboard if the user is already authenticated
   // and trying to access sign-in, sign-up, or home page
   if (

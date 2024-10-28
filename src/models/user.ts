@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import mongoose, { Schema, Document, Model } from "mongoose";
-import { MessageSchema } from "./Message";
+import { Message, MessageSchema } from "./Message";
 
 // Define the User interface
 export interface User extends Document {
@@ -11,7 +11,7 @@ export interface User extends Document {
   verifyCodeExpiry: Date;
   isVerified: boolean;
   isAcceptingMessages: boolean;
-  messages: (typeof MessageSchema)[];
+  messages: Message[];
   authType: string;
   profilePic: string;
 }
