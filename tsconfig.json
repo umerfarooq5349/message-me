@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "src/_middleware.ts"  ],
+, "src/_middleware.ts", "src/emails/verificationEmailTemplate.tsx"  ],
   "exclude": [
     "node_modules"
   ]

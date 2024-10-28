@@ -1,134 +1,174 @@
+// components/VerificationEmail.tsx
+
 import {
   Body,
   Container,
   Head,
   Heading,
   Html,
-  Link,
+  Img,
   Preview,
   Section,
   Text,
-  Button,
 } from "@react-email/components";
 
-// interface VerificationEmailProps {
-//   username: string;
-//   verifyCode: string;
-// }
+interface VerificationEmailProps {
+  userName: string;
+  verifyCode: string;
+  host: string;
+}
 
-function VerificationEmail(userName: string, verifyCode: string) {
+const VerificationEmailTemplate = ({
+  userName,
+  verifyCode,
+  host,
+}: VerificationEmailProps) => {
   return (
     <Html>
       <Head />
-      <Preview>Sign in to jobaccepted.com</Preview>
-      <Body style={main}>
-        <Container style={container}>
-          <Text style={company}>Job Accepted</Text>
-          <Text style={company}>Hey {userName}</Text>
-          <Heading style={codeTitle}>Your verification code</Heading>
-          <Text style={codeDescription}>
-            Enter it in your open browser window or press the sign in button.
-            This code will expire in 15 minutes.
-          </Text>
-          <Section style={codeContainer}>
-            <Heading style={codeStyle}>{verifyCode}</Heading>
+      <Preview>Verify your account on Be Anonymous</Preview>
+      <Body style={bodyStyle}>
+        <Container style={containerStyle}>
+          <Section style={headerStyle}>
+            <Container style={imageContainerStyle}>
+              <Img
+                src={`${host}/static/be-anonymous.png`}
+                width="80"
+                height="80"
+                alt="Be Anonymous"
+                style={imageStyle}
+              />
+            </Container>
+            <Heading style={headingStyle}>Be Anonymous</Heading>
+            <Text style={subTextStyle}>
+              Welcome to our community, {userName}!
+            </Text>
           </Section>
-          <Section style={buttonContainer}>
-            <Button href="https://www.jobaccepted.com/" style={button}>
-              Sign in
-            </Button>
-          </Section>
-          <Text style={paragraph}>Not expecting this email?</Text>
-          <Text style={paragraph}>
-            Contact{" "}
-            <Link href="mailto:support@jobaccepted.com" style={link}>
-              support@jobaccepted.com
-            </Link>{" "}
-            if you did not request this code.
+          <Text style={mainTextStyle}>
+            Thank you for signing up on Be Anonymous
           </Text>
+          <Text style={descriptionStyle}>
+            To complete your registration, use the code below to verify your
+            email address. This code will expire in 30 minutes.
+          </Text>
+          <Section style={codeContainerStyle}>
+            <Text style={codeStyle}>{verifyCode}</Text>
+          </Section>
+          <Section style={dividerStyle}></Section>
+          <Text style={footerTextStyle}>Not expecting this email?</Text>
+          <Text style={footerTextStyle}>
+            Simply ignore this message if it wasn’t you.
+          </Text>
+          <Section style={bottomSectionStyle}>
+            <Text style={copyrightStyle}>
+              © {new Date().getFullYear()} Be Anonymous. All rights reserved.
+            </Text>
+          </Section>
         </Container>
       </Body>
     </Html>
   );
-}
+};
 
-export default VerificationEmail;
+export default VerificationEmailTemplate;
 
-const main = {
-  backgroundColor: "#ffffff",
-  fontFamily: "HelveticaNeue,Helvetica,Arial,sans-serif",
+// Styles
+const bodyStyle = {
+  // background: "#04293a", // Dark background for dark mode
+  color: "#ecb365", // Original text color
+  fontFamily: "Helvetica, Arial, sans-serif",
   textAlign: "center" as const,
 };
 
-const container = {
-  backgroundColor: "#ffffff",
-  border: "1px solid #ddd",
-  borderRadius: "5px",
-  marginTop: "20px",
-  width: "480px",
-  maxWidth: "100%",
+const containerStyle = {
+  backgroundColor: "#1F4663", // Darker container background
+  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.4)",
+  borderRadius: "8px",
+  maxWidth: "450px",
+  margin: "40px auto",
+  padding: "24px",
+};
+
+const headerStyle = {
+  background: "linear-gradient(-45deg, #064663, #1F4663)", // Gradient for header
+  color: "#ecb365", // Text color for the header
+  borderRadius: "8px 8px 0 0",
+  padding: "24px 32px",
+  marginBottom: "16px",
+  textAlign: "center" as const,
+};
+
+const imageContainerStyle = {
+  display: "flex",
+  justifyContent: "center",
+  marginBottom: "16px",
+};
+
+const imageStyle = {
+  display: "block",
   margin: "0 auto",
-  padding: "12% 6%",
 };
 
-const company = {
-  fontWeight: "bold",
+const headingStyle = {
+  color: "#ecb365", // Maintained heading color
+  fontSize: "24px",
+  fontWeight: "bold" as const,
+};
+
+const subTextStyle = {
+  fontSize: "14px",
+  color: "#ecb365", // Maintained subheading color
+  fontWeight: "300" as const,
+  marginTop: "8px",
+};
+
+const mainTextStyle = {
+  color: "#ecb365", // Main text color
   fontSize: "18px",
-  textAlign: "center" as const,
+  fontWeight: "600" as const,
+  marginTop: "16px",
 };
 
-const codeTitle = {
-  textAlign: "center" as const,
+const descriptionStyle = {
+  color: "#ecb365", // Description text color
+  fontSize: "14px",
+  marginTop: "8px",
 };
 
-const codeDescription = {
-  textAlign: "center" as const,
-};
-
-const codeContainer = {
-  background: "rgba(0,0,0,.05)",
-  borderRadius: "4px",
-  margin: "16px auto 14px",
-  verticalAlign: "middle",
-  width: "280px",
-  maxWidth: "100%",
+const codeContainerStyle = {
+  backgroundColor: "rgba(236, 179, 101, 0.2)", // Lightened background for the code section
+  border: "1px solid #ecb365", // Original border color
+  borderRadius: "8px",
+  marginTop: "24px",
+  padding: "16px 24px",
+  width: "260px",
+  margin: "24px auto",
 };
 
 const codeStyle = {
-  color: "#000",
-  display: "inline-block",
-  paddingBottom: "8px",
-  paddingTop: "8px",
-  margin: "0 auto",
-  width: "100%",
-  textAlign: "center" as const,
-  letterSpacing: "8px",
+  color: "#ecb365", // Original code color
+  fontSize: "28px",
+  fontFamily: "monospace",
+  letterSpacing: "4px",
+  fontWeight: "bold" as const,
 };
 
-const buttonContainer = {
-  margin: "27px auto",
-  width: "auto",
+const dividerStyle = {
+  borderTop: "1px solid rgba(236, 179, 101, 0.3)", // Light divider color
+  marginTop: "24px",
 };
 
-const button = {
-  backgroundColor: "#5e6ad2",
-  borderRadius: "3px",
-  fontWeight: "600",
-  color: "#fff",
-  textAlign: "center" as const,
-  padding: "12px 24px",
-  margin: "0 auto",
+const footerTextStyle = {
+  color: "#ecb365", // Footer text color
+  fontSize: "14px",
+  marginTop: "24px",
 };
 
-const paragraph = {
-  color: "#444",
-  letterSpacing: "0",
-  padding: "0 40px",
-  margin: "0",
-  textAlign: "center" as const,
+const bottomSectionStyle = {
+  marginTop: "32px",
 };
 
-const link = {
-  color: "#444",
-  textDecoration: "underline",
+const copyrightStyle = {
+  fontSize: "12px",
+  color: "#cccccc", // Lightened copyright color for readability
 };

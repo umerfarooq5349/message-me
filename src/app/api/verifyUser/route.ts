@@ -45,7 +45,11 @@ export async function POST(request: Request) {
 
     if (isCodeValid && !isCodeExpired) {
       // Update the user to set isVerified to true
-      await UserModel.findByIdAndUpdate(user._id, { isVerified: true });
+      await UserModel.findByIdAndUpdate(
+        user._id,
+        { isVerified: true },
+        { new: true }
+      );
     } // If validation succeeds
     return Response.json(
       {
