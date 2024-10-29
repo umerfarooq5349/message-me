@@ -19,8 +19,10 @@ export async function GET(request: Request) {
     console.log(result);
 
     if (!result.success) {
+      console.log("result checikng for err");
+      console.log(result);
       //   throw new Error("" + result);
-      return Response.json({ result });
+      return sendResponce(false, "zod err", 403, result);
     }
     const { userName } = result.data;
 
@@ -30,10 +32,6 @@ export async function GET(request: Request) {
     });
     if (existingUserName) {
       return sendResponce(false, "User name is unavailable", 403);
-      Response.json({
-        status: true,
-        message: "User name is already in use",
-      });
     }
 
     return sendResponce(true, "User name available", 200);

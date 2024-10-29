@@ -8,7 +8,7 @@ import { sendResponce } from "@/lib/sendResponce";
 export async function POST(request: NextRequest) {
   await dbConnect();
   try {
-    const { userName, email, password, authType } = await request.json();
+    const { userName, email, password } = await request.json();
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -41,14 +41,12 @@ export async function POST(request: NextRequest) {
       existingUserWithEmail.password = hashedPassword;
       existingUserWithEmail.verifyCode = verifyCode;
       existingUserWithEmail.verifyCodeExpiry = verifyCodeExpiryTime;
-      existingUserWithEmail.authType = authType;
+      existingUserWithEmail.authType = "credentials";
       await existingUserWithEmail.save();
       // Send verification email
       try {
         await sendVerificationEmail(userName, verifyCode, email);
-        console.log(
-          "Verification ekjfhiewewoid\n\n\n\nmail sent successfully."
-        );
+        console.log("Verification email sent successfully.");
       } catch (error) {
         console.error("Failed to send verification email:", error);
       }
@@ -59,7 +57,7 @@ export async function POST(request: NextRequest) {
         password: hashedPassword,
         verifyCodeExpiry: verifyCodeExpiryTime,
         verifyCode,
-        authType,
+        authType: "credentials",
         userName,
       });
       await newUser.save();

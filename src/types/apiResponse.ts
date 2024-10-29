@@ -1,10 +1,10 @@
-import { Message } from "@/models/Message";
+// import { Message } from "@/models/Message";
 
 export interface ApiResponse {
-  status: boolean;
+  success: boolean | string;
   message: string;
-  data?: {
-    isAcceptingMessages?: boolean;
-    messages?: [Message];
-  };
+  // data?: {
+  //   isAcceptingMessages?: boolean;
+  //   messages?: [Message];
+  // };
 }

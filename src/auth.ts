@@ -5,7 +5,7 @@ import NextAuth from "next-auth";
 
 import Google from "next-auth/providers/google";
 // import Facebook from "next-auth/providers/facebook";
-// import Instagram from "next-auth/providers/instagram";
+import Instagram from "next-auth/providers/instagram";
 // import Resend from "next-auth/providers/resend";
 
 import bcrypt from "bcryptjs";
@@ -24,7 +24,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Google,
     // Facebook,
-    // Instagram,
+    Instagram,
     // Resend,
     Credentials({
       credentials: {

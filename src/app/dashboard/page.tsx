@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 const Dashbord: NextPage = ({}) => {
   const { data: session, status } = useSession();
   if (status === "loading") return <p>Loading...</p>;
-  if (!session!.user) return <p>Not signed in</p>;
+  if (!session?.user) return <p>Not signed in</p>;
   // const handleSignOut = async () => {
   //   await signOut();
   // };

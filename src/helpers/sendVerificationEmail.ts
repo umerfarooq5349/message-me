@@ -2,7 +2,7 @@
 import VerificationEmail from "@/emails/verificationEmailTemplate";
 import { resend } from "@/lib/resend";
 import { ApiResponse } from "@/types/apiResponse";
-import emailJs from "@emailjs/browser";
+// import emailJs from "@emailjs/browser";
 import { render } from "@react-email/components";
 
 import nodemailer from "nodemailer";
@@ -34,9 +34,7 @@ export async function sendVerificationEmail(
     //   <VerificationEmail userName={userName} verifyCode={verifyCode} />
     // );
 
-    const html = await render(
-      VerificationEmail({ userName, verifyCode, host: process.env.BASE_URL! })
-    );
+    const html = await render(VerificationEmail({ userName, verifyCode }));
     const mailOptions = {
       from: process.env.GMAIL_ID,
       to: email,
@@ -62,11 +60,11 @@ export async function sendVerificationEmail(
     //   react: VerificationEmail(userName, verifyCode),
     // });
     return {
-      status: true,
+      success: true,
       message: "Verification emaiii\n\n\nil sent successfully (:",
     };
   } catch (sendingEmailError) {
     console.error("Failed to send verification email ):", sendingEmailError);
-    return { status: false, message: "Failed to send verification email ):" };
+    return { success: false, message: "Failed to send verification email ):" };
   }
 }

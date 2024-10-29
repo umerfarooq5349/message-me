@@ -15,13 +15,11 @@ import {
 interface VerificationEmailProps {
   userName: string;
   verifyCode: string;
-  host: string;
 }
 
 const VerificationEmailTemplate = ({
   userName,
   verifyCode,
-  host,
 }: VerificationEmailProps) => {
   return (
     <Html>
@@ -32,7 +30,7 @@ const VerificationEmailTemplate = ({
           <Section style={headerStyle}>
             <Container style={imageContainerStyle}>
               <Img
-                src={`${host}/static/be-anonymous.png`}
+                src={`/static/be-anonymous.png`}
                 width="80"
                 height="80"
                 alt="Be Anonymous"

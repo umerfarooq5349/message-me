@@ -1,4 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
+import { sendResponce } from "@/lib/sendResponce";
 import { UserModel } from "@/models/user";
 import { verifySchema } from "@/schemas/verifySchema"; // Import your schema
 
@@ -14,26 +15,13 @@ export async function POST(request: Request) {
 
     // Check if validation failed
     if (!validationResult.success) {
-      return Response.json(
-        {
-          status: false,
-          error: "Must be 6 digit code",
-          details: validationResult,
-        },
-        { status: 400 }
-      );
+      return sendResponce(false, "Must be 6 digit code", 400, validationResult);
     }
 
     const user = await UserModel.findOne({ userName, isVerified: false });
 
     if (!user) {
-      return Response.json(
-        {
-          status: true,
-          message: "User not found.",
-        },
-        { status: 401 }
-      );
+      return sendResponce(false, "User not found or you are varified.", 401);
     }
 
     const currentDate = new Date();
@@ -50,24 +38,11 @@ export async function POST(request: Request) {
         { isVerified: true },
         { new: true }
       );
+      return sendResponce(true, "User varified", 200, user);
     } // If validation succeeds
-    return Response.json(
-      {
-        status: true,
-        message: "User varified",
-        user,
-      },
-      { status: 200 }
-    );
+    return sendResponce(false, "Wrong verify code or expired code", 403);
   } catch (error) {
     console.error("Error during validation:", error);
-    return (
-      Response.json({
-        status: false,
-        message: "Error during validation.",
-        error,
-      }),
-      { status: 500 }
-    );
+    return sendResponce(false, "Error during validation.", 500, error);
   }
 }
