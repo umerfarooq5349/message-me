@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LoaderPinwheel } from "lucide-react";
 import Link from "next/link";
-import AnimatedCircle from "@/components/ui/animiantedCircle";
+import AnimatedCircle from "@/components/animiantedCircle";
 
 const SignUpPage = () => {
   const [userName, setUserName] = useState("");

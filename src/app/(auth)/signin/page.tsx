@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LoaderPinwheel } from "lucide-react";
 import Link from "next/link";
-import AnimatedCircle from "@/components/ui/animiantedCircle";
+import AnimatedCircle from "@/components/animiantedCircle";
 import { signIn } from "next-auth/react";
 import { signinSchema } from "@/schemas/signInSchema";
 
@@ -62,7 +62,7 @@ const SignInPage = () => {
           description: "Welcome back again",
         });
       }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
         title: "Failed",
