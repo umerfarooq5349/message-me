@@ -13,11 +13,11 @@ export async function POST(request: Request) {
     }
 
     const userId = session.user._id;
-    const { acceptingMessage } = await request.json();
-
+    const { acceptMessage } = await request.json();
+    console.log(`acceptingMessage ${acceptMessage}`);
     const user = await UserModel.findByIdAndUpdate(
       userId,
-      { isAcceptingMessages: acceptingMessage },
+      { isAcceptingMessages: acceptMessage },
       { new: true }
     );
     if (!user) {
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     }
     return sendResponce(
       true,
-      `Accepting messages turined to ${user.isAcceptingMessages}`,
+      `Accepting messages turned to ${user.isAcceptingMessages}`,
       201,
       user
     );
@@ -49,5 +49,5 @@ export async function GET() {
   if (!user) {
     return sendResponce(false, "User not found", 404);
   }
-  return sendResponce(true, "User found", 200, user);
+  return sendResponce(true, "User found", 200, user.isAcceptingMessages);
 }

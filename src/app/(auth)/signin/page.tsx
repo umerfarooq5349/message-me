@@ -47,7 +47,7 @@ const SignInPage = () => {
     setIsGoogleSubmiting(false);
     setIsInstagramSubmiting(false);
     try {
-      const result = await signIn("credentials", { data, redirect: false });
+      const result = await signIn("credentials", { ...data, redirect: false });
       if (result?.error) {
         console.log(result);
         setLoginError("Invalid email or password");

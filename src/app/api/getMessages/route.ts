@@ -30,6 +30,6 @@ export async function GET() {
     // Return all messages under 'data' key
     return sendResponce(true, "Here are the messages", 200, user[0]);
   } catch (error) {
-    return sendResponce(false, "Message sent unsuccessfull", 500, error);
+    return sendResponce(false, "Message not found", 500, error);
   }
 }

@@ -22,9 +22,7 @@ export function NavBar() {
             <Button className="bg-transparent text-[#D4A373] shadow-none font-semibold py-2 px-4 rounded-lg transition-transform transform   hover:bg-transparent  duration-300">
               {/* className="bg-[#3B1E54] text-[#D4A373]  */}
               Welcome, {""}
-              <span className="text-[#D4A373]">
-                {session.user.userName || session.user.email || ""}
-              </span>
+              <span className="text-[#D4A373]">{session.user.userName}</span>
             </Button>
             <Button
               className="bg-[#3B1E54] text-[#D4A373] shadow-none font-semibold py-2 px-4 rounded-lg transition-transform transform  hover:shadow-lg hover:bg-[#3B1E54] duration-300"

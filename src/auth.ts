@@ -28,7 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     // Resend,
     Credentials({
       credentials: {
-        email: {
+        identifier: {
           label: "Email",
           type: "email",
           placeholder: "example@example.com",
@@ -42,7 +42,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         try {
           await dbConnect();
           let user = null;
-          user = await UserModel.findOne({ email: credentials.email });
+          user = await UserModel.findOne({ email: credentials.identifier });
           if (
             !user ||
             !(await bcrypt.compare(
@@ -73,7 +73,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   // session: { strategy: "jwt" },
   // debug: true,
   secret: process.env.AUTH_SECRET,
-  //   pages: { signIn: "/signIn" },
+  // pages: { signIn: "/signin" },
 
   callbacks: {
     authorized: async ({ auth }) => {
@@ -86,19 +86,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       try {
         console.log("Sign-in callback triggered");
 
-        if (!account) {
-          console.log("No account information provided.");
-          return false;
-        }
-        console.log("Account provider:", account.provider);
-
         // If the account provider is not credentials, we treat it as a social login
         if (
-          account.provider === "google" ||
-          account.provider === "instagram" ||
-          account.provider === "facebook"
+          account?.provider === "google" ||
+          account?.provider === "instagram" ||
+          account?.provider === "facebook"
         ) {
-          console.log("Using social provider:", account.provider);
+          console.log("Using social provider:", account?.provider);
 
           await dbConnect();
           console.log("Connected to database");
