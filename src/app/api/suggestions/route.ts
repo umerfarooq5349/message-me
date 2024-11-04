@@ -8,7 +8,7 @@ const groq = createGroq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
-export async function POST() {
+export async function GET() {
   //   const { messages } = await req.json();
   const model = groq("llama3-8b-8192");
   try {
@@ -19,7 +19,7 @@ export async function POST() {
           role: "user",
           content: `You're a master at crafting open-ended, thought-provoking questions 
       that spark friendly and insightful conversations. Generate a list of 5 unique, 
-      engaging questions formatted in a single string, with each question separated 
+      engaging questions formatted in a single string, in plain text with each question separated 
       by '||'. These questions are meant for an anonymous social messaging platform 
       similar to Qooh.me and should appeal to a broad audience while avoiding personal 
       or sensitive topics. Focus on universal themes that encourage curiosity and a 

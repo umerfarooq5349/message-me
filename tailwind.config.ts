@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import flowbite from "flowbite-react/tailwind";
+
 const config: Config = {
   darkMode: ["class"],
   content: [
@@ -62,12 +63,46 @@ const config: Config = {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
         },
+        "border-spin": { "100%": { transform: "rotate(-360deg)" } },
+        bikeTire: {
+          "0%": { transform: "rotate(0)", strokeDashoffset: "56.549" },
+          "33%": { transform: "rotate(0.33turn)", strokeDashoffset: "0" },
+          "67%": { transform: "rotate(0.67turn)", strokeDashoffset: "0" },
+          "100%": { transform: "rotate(1turn)", strokeDashoffset: "-56.549" },
+        },
+        bikePedals: {
+          "0%": { strokeDashoffset: "-25.133" },
+          "33%": { strokeDashoffset: "-21.991" },
+          "67%": { strokeDashoffset: "-21.991" },
+          "100%": { strokeDashoffset: "-25.133" },
+        },
+        bikePedalsSpin: {
+          "0%": { transform: "rotate(0.1875turn)" },
+          "100%": { transform: "rotate(3.1875turn)" },
+        },
+        bikeSpokes: {
+          "0%": { strokeDashoffset: "-31.416" },
+          "33%": { strokeDashoffset: "-23.562" },
+          "67%": { strokeDashoffset: "-23.562" },
+          "100%": { strokeDashoffset: "-31.416" },
+        },
+        bikeSpokesSpin: {
+          "0%": { transform: "rotate(0)" },
+          "100%": { transform: "rotate(3turn)" },
+        },
       },
       animation: {
         "caret-blink": "caret-blink 1.25s ease-out infinite",
+        bikeTire: "bikeTire 3s ease-in-out infinite",
+        bikePedals: "bikePedals 3s ease-in-out infinite",
+        bikePedalsSpin: "bikePedalsSpin 3s ease-in-out infinite",
+        bikeSpokes: "bikeSpokes 3s ease-in-out infinite",
+        bikeSpokesSpin: "bikeSpokesSpin 3s ease-in-out infinite",
+        borderSpin: "border-spin 3s linear infinite",
       },
     },
   },
   plugins: [require("tailwindcss-animate"), flowbite.plugin()],
 };
+
 export default config;

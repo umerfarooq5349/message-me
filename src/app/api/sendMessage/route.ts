@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import dbConnect from "@/lib/dbConnect";
 import { sendResponce } from "@/lib/sendResponce";
 import { Message } from "@/models/Message";
@@ -6,16 +5,15 @@ import { UserModel } from "@/models/user";
 
 export async function POST(request: Request) {
   try {
-    const session = await auth();
-    const { content, createdAt } = await request.json();
+    // const session = await auth();
+    const { content, createdAt, userName } = await request.json();
     await dbConnect();
 
-    if (!session || !session?.user) {
-      return sendResponce(false, "User is not authenticated", 401);
-    }
-    const userId = session.user._id;
-
-    const user = await UserModel.findById(userId);
+    // if (!session || !session?.user) {
+    //   return sendResponce(false, "User is not authenticated", 401);
+    // }
+    // const userId = session.user._id;
+    const user = await UserModel.findOne({ userName });
 
     if (!user) {
       return sendResponce(false, "User not found", 404);
