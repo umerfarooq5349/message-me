@@ -20,6 +20,7 @@ const Dashboard = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
+  const [profileURL, setProfileURL] = useState("");
 
   const form = useForm({ resolver: zodResolver(acceptMessageSchema) });
   const { watch, setValue, register } = form;
@@ -105,9 +106,11 @@ const Dashboard = () => {
       setIsSwitchLoading(false);
     }
   };
-
-  const profileURL = `http://localhost:3000/user/${session?.user.userName}`;
-
+  if (window !== undefined) {
+    setProfileURL(
+      `${window.location.protocol}//${window.location.host}/user/${session?.user.userName}`
+    );
+  }
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileURL);
     toast({
