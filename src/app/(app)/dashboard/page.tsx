@@ -106,7 +106,7 @@ const Dashboard = () => {
     }
   };
 
-  const profileURL = `${window.location.protocol}//${window.location.host}/u/${session?.user.userName}`;
+  const profileURL = `http://localhost:3000/user/${session?.user.userName}`;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileURL);
