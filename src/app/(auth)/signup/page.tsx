@@ -79,10 +79,13 @@ const SignUpPage = () => {
       router.replace(`/verify/${userName}`);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      toast({
-        title: "Failed",
-        description: "Sign-up failed. Try again.",
-      });
+      if (error instanceof AxiosError) {
+        toast({ title: "Error", description: error.response?.data.message });
+        // toast({
+        //   title: "Failed",
+        //   description: "Sign-up failed. Try again.",
+        // });
+      }
     } finally {
       setIsSubmitting(false);
     }

@@ -12,12 +12,13 @@ import bcrypt from "bcryptjs";
 
 import Credentials from "next-auth/providers/credentials";
 import { UserModel } from "./models/user";
-import dbConnect from "./lib/dbConnect";
+// import dbConnect from "./lib/dbConnect";
 import { verifyCode, verifyCodeExpiryTime } from "./lib/verifyCode";
 
 // import authConfig from "./auth.config";
 // import mongoClient from "./lib/db";
-// import dbConnect from "./lib/dbConnect";
+import dbConnect from "./lib/dbConnect";
+import { sendVerificationEmail } from "./helpers/sendVerificationEmail";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   // adapter: MongoDBAdapter(mongoClient),
@@ -42,7 +43,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         try {
           await dbConnect();
           let user = null;
-          user = await UserModel.findOne({ email: credentials.identifier });
+          console.log(credentials);
+          user = await UserModel.findOne({
+            $or: [
+              { email: credentials.identifier },
+              { userName: credentials.identifier },
+            ],
+          });
           if (
             !user ||
             !(await bcrypt.compare(
@@ -52,6 +59,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           ) {
             throw new Error("Invalid credentials");
           }
+          if (!user.isVerified) {
+            await sendVerificationEmail(user.userName, verifyCode, user.email);
+            throw new Error("Please verify your email first");
+          }
+
           // Overwrite the _id field to explicitly define it as a string
           const typedUser = {
             ...user.toObject(), // Convert the Mongoose user document to plain object
@@ -70,7 +82,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // },
     }),
   ],
-  // session: { strategy: "jwt" },
+  session: { strategy: "jwt" },
   // debug: true,
   secret: process.env.AUTH_SECRET,
   // pages: { signIn: "/signin" },
@@ -95,7 +107,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           console.log("Using social provider:", account?.provider);
 
           await dbConnect();
-          console.log("Connected to database");
+          console.log(profile);
 
           // Check if user already exists
           const existingUser = await UserModel.findOne({ email: user.email });
@@ -115,10 +127,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             userName: user.name || `user_${verifyCode}`,
             verifyCode,
             verifyCodeExpiry: verifyCodeExpiryTime,
+            isVerified: profile!.email_verified,
             authType: account.provider,
           });
 
           await newUser.save();
+
           console.log("New user created:", newUser);
         } else {
           console.log("Sign-in with credentials provider.");

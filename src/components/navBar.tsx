@@ -4,10 +4,12 @@ import Link from "next/link";
 import { Navbar } from "flowbite-react";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "./ui/button";
+import { usePathname } from "next/navigation";
 
 export function NavBar() {
   const { data: session } = useSession();
-
+  const pathName = usePathname();
+  console.log(pathName);
   return (
     <Navbar
       rounded
@@ -34,12 +36,23 @@ export function NavBar() {
             </Button>
           </div>
         ) : (
-          <Link
-            href="/signin"
-            className="bg-[#3B1E54] text-[#D4A373] font-semibold py-2 px-4 rounded-lg transition-transform transform hover:scale-105 hover:shadow-md duration-300"
-          >
-            Sign in
-          </Link>
+          <div>
+            {pathName.startsWith("/user/") ? (
+              <Link
+                href="/signup"
+                className="bg-[#3B1E54] text-[#D4A373] font-semibold py-2 px-4 rounded-lg transition-transform transform hover:bg-[#3B1E54] hover:text-white hover:shadow-md duration-300"
+              >
+                Signup to recive messages
+              </Link>
+            ) : (
+              <Link
+                href="/signin"
+                className="bg-[#3B1E54] text-[#D4A373] font-semibold py-2 px-4 rounded-lg transition-transform transform hover:scale-105 hover:shadow-md duration-300"
+              >
+                Signin
+              </Link>
+            )}
+          </div>
         )}
       </Navbar.Collapse>
     </Navbar>

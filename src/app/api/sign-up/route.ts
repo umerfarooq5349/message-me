@@ -36,8 +36,9 @@ export async function POST(request: NextRequest) {
       if (existingUserWithEmail.isVerified) {
         return sendResponce(false, "Email already exists.", 403);
       }
-
+      // email exist but not verified
       // Update existing user's details
+      existingUserWithEmail.userName = userName;
       existingUserWithEmail.password = hashedPassword;
       existingUserWithEmail.verifyCode = verifyCode;
       existingUserWithEmail.verifyCodeExpiry = verifyCodeExpiryTime;
@@ -46,9 +47,14 @@ export async function POST(request: NextRequest) {
       // Send verification email
       try {
         await sendVerificationEmail(userName, verifyCode, email);
-        console.log("Verification email sent successfully.");
+        return sendResponce(true, "Please verify your email.", 201);
       } catch (error) {
-        console.error("Failed to send verification email:", error);
+        return sendResponce(
+          true,
+          "Unable to send verification email.",
+          403,
+          error
+        );
       }
     } else {
       // Create a new user

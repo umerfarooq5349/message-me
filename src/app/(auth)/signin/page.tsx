@@ -56,7 +56,7 @@ const SignInPage = () => {
           description: "Invalid email or password",
         });
       } else {
-        router.push("/");
+        router.push("/dashboard");
         toast({
           title: "Sign In successfull",
           description: "Welcome back again",
@@ -151,7 +151,7 @@ const SignInPage = () => {
                   <FormLabel className="text-[#3B1E54]">Email</FormLabel>
                   <FormControl>
                     <Input
-                      type="email"
+                      type="text"
                       placeholder="example@example.com"
                       {...field}
                       className="border border-[#3B1E54] rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#D4A373] transition duration-300 hover:bg-[#f2f2f2]"
