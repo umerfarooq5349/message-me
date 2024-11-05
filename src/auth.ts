@@ -2,30 +2,24 @@ import NextAuth from "next-auth";
 
 // import { MongoDBAdapter } from "@auth/mongodb-adapter";
 // import type { NextAuthConfig } from "next-auth";
-
-import Google from "next-auth/providers/google";
+// import Google from "next-auth/providers/google";
 // import Facebook from "next-auth/providers/facebook";
-import Instagram from "next-auth/providers/instagram";
+// import Instagram from "next-auth/providers/instagram";
 // import Resend from "next-auth/providers/resend";
-
 import bcrypt from "bcryptjs";
-
 import Credentials from "next-auth/providers/credentials";
 import { UserModel } from "./models/user";
 // import dbConnect from "./lib/dbConnect";
-import { verifyCode, verifyCodeExpiryTime } from "./lib/verifyCode";
-
 // import authConfig from "./auth.config";
 // import mongoClient from "./lib/db";
 import dbConnect from "./lib/dbConnect";
-import { sendVerificationEmail } from "./helpers/sendVerificationEmail";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   // adapter: MongoDBAdapter(mongoClient),
   providers: [
-    Google,
+    // Google,
     // Facebook,
-    Instagram,
+    // Instagram,
     // Resend,
     Credentials({
       credentials: {
@@ -59,10 +53,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           ) {
             throw new Error("Invalid credentials");
           }
-          if (!user.isVerified) {
-            await sendVerificationEmail(user.userName, verifyCode, user.email);
-            throw new Error("Please verify your email first");
-          }
+          // if (!user.isVerified) {
+          //   await sendVerificationEmail(user.userName, verifyCode, user.email);
+          //   throw new Error("Please verify your email first");
+          // }
 
           // Overwrite the _id field to explicitly define it as a string
           const typedUser = {
@@ -94,56 +88,56 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async signIn({ user, account, profile }) {
-      try {
-        console.log("Sign-in callback triggered");
+    // async signIn({ user, account, profile }) {
+    //   try {
+    //     console.log("Sign-in callback triggered");
 
-        // If the account provider is not credentials, we treat it as a social login
-        if (
-          account?.provider === "google" ||
-          account?.provider === "instagram" ||
-          account?.provider === "facebook"
-        ) {
-          console.log("Using social provider:", account?.provider);
+    //     // If the account provider is not credentials, we treat it as a social login
+    //     if (
+    //       account?.provider === "google" ||
+    //       account?.provider === "instagram" ||
+    //       account?.provider === "facebook"
+    //     ) {
+    //       console.log("Using social provider:", account?.provider);
 
-          await dbConnect();
-          console.log(profile);
+    //       await dbConnect();
+    //       console.log(profile);
 
-          // Check if user already exists
-          const existingUser = await UserModel.findOne({ email: user.email });
-          console.log("Existing user found:", existingUser);
+    //       // Check if user already exists
+    //       const existingUser = await UserModel.findOne({ email: user.email });
+    //       console.log("Existing user found:", existingUser);
 
-          if (existingUser) {
-            console.log("User already exists, skipping creation.");
-            return true; // User exists, continue sign-in
-          }
+    //       if (existingUser) {
+    //         console.log("User already exists, skipping creation.");
+    //         return true; // User exists, continue sign-in
+    //       }
 
-          // If user doesn’t exist, create a new one
-          console.log("Creating new user for social login");
+    //       // If user doesn’t exist, create a new one
+    //       console.log("Creating new user for social login");
 
-          const newUser = new UserModel({
-            profilePic: user.image,
-            email: user.email,
-            userName: user.name || `user_${verifyCode}`,
-            verifyCode,
-            verifyCodeExpiry: verifyCodeExpiryTime,
-            isVerified: profile!.email_verified,
-            authType: account.provider,
-          });
+    //       const newUser = new UserModel({
+    //         profilePic: user.image,
+    //         email: user.email,
+    //         userName: user.name || `user_${verifyCode}`,
+    //         verifyCode,
+    //         verifyCodeExpiry: verifyCodeExpiryTime,
+    //         isVerified: profile!.email_verified,
+    //         authType: account.provider,
+    //       });
 
-          await newUser.save();
+    //       await newUser.save();
 
-          console.log("New user created:", newUser);
-        } else {
-          console.log("Sign-in with credentials provider.");
-        }
+    //       console.log("New user created:", newUser);
+    //     } else {
+    //       console.log("Sign-in with credentials provider.");
+    //     }
 
-        return true; // Allow sign-in
-      } catch (error) {
-        console.error("Error during sign-in callback:", error);
-        return false; // Deny sign-in on error
-      }
-    },
+    //     return true; // Allow sign-in
+    //   } catch (error) {
+    //     console.error("Error during sign-in callback:", error);
+    //     return false; // Deny sign-in on error
+    //   }
+    // },
 
     async jwt({ token, user }) {
       if (user) {

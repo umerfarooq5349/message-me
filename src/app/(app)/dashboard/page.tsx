@@ -106,7 +106,7 @@ const Dashboard = () => {
     }
   };
 
-  const profileURL = `http://localhost:3000/u/${session?.user.userName}`;
+  const profileURL = `https://be-anonymouse.vercel.app/user/${session?.user.userName}`;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileURL);

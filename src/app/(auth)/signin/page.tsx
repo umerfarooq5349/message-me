@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useToast } from "@/hooks/use-toast";
@@ -17,14 +17,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LoaderPinwheel } from "lucide-react";
 import Link from "next/link";
-import AnimatedCircle from "@/components/animiantedCircle";
+// import AnimatedCircle from "@/components/animiantedCircle";
 import { signIn } from "next-auth/react";
 import { signinSchema } from "@/schemas/signInSchema";
 
 const SignInPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isGoogleSubmiting, setIsGoogleSubmiting] = useState(false);
-  const [isInstagramSubmiting, setIsInstagramSubmiting] = useState(false);
+  // const [isGoogleSubmiting, setIsGoogleSubmiting] = useState(false);
+  // const [isInstagramSubmiting, setIsInstagramSubmiting] = useState(false);
   const [isSignUpLinkClicked, setIsSignUpLinkClicked] = useState(false);
   const [loginError, setLoginError] = useState("");
 
@@ -44,8 +44,8 @@ const SignInPage = () => {
 
   const onSubmit = async (data: z.infer<typeof signinSchema>) => {
     setIsSubmitting(true);
-    setIsGoogleSubmiting(false);
-    setIsInstagramSubmiting(false);
+    // setIsGoogleSubmiting(false);
+    // setIsInstagramSubmiting(false);
     try {
       const result = await signIn("credentials", { ...data, redirect: false });
       if (result?.error) {
@@ -73,16 +73,16 @@ const SignInPage = () => {
     }
   };
 
-  const handleInstagramSignin = async () => {
-    setIsInstagramSubmiting(true);
-    try {
-      await signIn("instagram");
-    } finally {
-      setIsSubmitting(false);
-      setIsGoogleSubmiting(false);
-      setIsInstagramSubmiting(false);
-    }
-  };
+  // const handleInstagramSignin = async () => {
+  //   setIsInstagramSubmiting(true);
+  //   try {
+  //     await signIn("instagram");
+  //   } finally {
+  //     setIsSubmitting(false);
+  //     setIsGoogleSubmiting(false);
+  //     setIsInstagramSubmiting(false);
+  //   }
+  // };
 
   const handleSignUpLinkClick = () => {
     setIsSignUpLinkClicked(true);
@@ -90,46 +90,46 @@ const SignInPage = () => {
     setIsSignUpLinkClicked(false);
   };
 
-  const handleGoogleSignin = async () => {
-    setIsGoogleSubmiting(true);
-    try {
-      await signIn("google");
-    } finally {
-      setIsSubmitting(false);
-      setIsGoogleSubmiting(false);
-      setIsInstagramSubmiting(false);
-    }
-  };
+  // const handleGoogleSignin = async () => {
+  //   setIsGoogleSubmiting(true);
+  //   try {
+  //     await signIn("google");
+  //   } finally {
+  //     setIsSubmitting(false);
+  //     setIsGoogleSubmiting(false);
+  //     setIsInstagramSubmiting(false);
+  //   }
+  // };
 
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const handleMouseMove = (event: MouseEvent) => {
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (rect) {
-      const x = event.clientX;
-      const y = event.clientY;
-      setMousePosition({ x, y });
-    }
-  };
+  // const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  // const containerRef = useRef<HTMLDivElement | null>(null);
+  // const handleMouseMove = (event: MouseEvent) => {
+  //   const rect = containerRef.current?.getBoundingClientRect();
+  //   if (rect) {
+  //     const x = event.clientX;
+  //     const y = event.clientY;
+  //     setMousePosition({ x, y });
+  //   }
+  // };
 
-  useEffect(() => {
-    const currentContainer = containerRef.current;
-    if (currentContainer) {
-      currentContainer.addEventListener("mousemove", handleMouseMove);
-    }
-    return () => {
-      if (currentContainer) {
-        currentContainer.removeEventListener("mousemove", handleMouseMove);
-      }
-    };
-  }, []);
+  // useEffect(() => {
+  //   const currentContainer = containerRef.current;
+  //   if (currentContainer) {
+  //     currentContainer.addEventListener("mousemove", handleMouseMove);
+  //   }
+  //   return () => {
+  //     if (currentContainer) {
+  //       currentContainer.removeEventListener("mousemove", handleMouseMove);
+  //     }
+  //   };
+  // }, []);
 
   return (
     <div
-      ref={containerRef}
+      // ref={containerRef}
       className="min-h-screen flex justify-center items-center bg-gradient-to-br from-[#3B1E54] to-[#387478] text-[#3B1E54] p-6"
     >
-      <AnimatedCircle mousePosition={mousePosition} />
+      {/* <AnimatedCircle mousePosition={mousePosition} /> */}
       <div className="w-full max-w-lg p-10 bg-[#D4BEE4] rounded-2xl shadow-xl transform transition duration-700 ease-in-out hover:shadow-2xl ">
         <div className="text-center mb-6 animate-fadeIn">
           <h1 className="text-4xl font-extrabold text-[#3B1E54] mb-2 transition-all duration-300">
@@ -194,8 +194,8 @@ const SignInPage = () => {
             </Button>
           </form>
         </Form>
-        <p className="text-center text-sm my-2">Or sign in with</p>
-        <div className="flex flex-row gap-3 ">
+        {/* <p className="text-center text-sm my-2">Or sign in with</p> */}
+        {/* <div className="flex flex-row gap-3 ">
           <Button
             onClick={handleGoogleSignin}
             className="w-full bg-[#3B1E54] text-[#D4A373] font-bold py-2 rounded-lg hover:bg-[#3B1E54] hover:scale-105 flex items-center justify-center hover:shadow-lg transition-all duration-300"
@@ -217,7 +217,7 @@ const SignInPage = () => {
               "Sign In with Instagram"
             )}
           </Button>
-        </div>
+        </div> */}
 
         <div className="text-center mt-6 flex justify-center gap-3">
           <p className="text-[#387478] flex items-center gap-2">
