@@ -23,10 +23,12 @@ import { useToast } from "@/hooks/use-toast";
 import { LoaderPinwheel } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-function VerifyUserPage({ params }: { params: { userName: string } }) {
-  const userName = React.use(
-    params as unknown as Promise<{ userName: string }>
-  ).userName;
+interface VerifyUserProps {
+  params: Promise<{ userName: string }>;
+}
+
+const VerifyUserPage: React.FC<VerifyUserProps> = ({ params }) => {
+  const userName = React.use(params).userName;
 
   const [isVerifyingCode, setIsVerifyingCode] = useState(false);
   const [verifyMessage, setVerifyMessage] = useState("");
@@ -137,6 +139,6 @@ function VerifyUserPage({ params }: { params: { userName: string } }) {
       </div>
     </div>
   );
-}
+};
 
 export default VerifyUserPage;
