@@ -14,6 +14,8 @@ export interface User extends Document {
   messages: Message[];
   authType: string;
   profilePic: string;
+  resetTokenExpiry: Date;
+  resetToken: string;
 }
 
 // Define the User schema
@@ -55,6 +57,8 @@ const UserSchema = new Schema<User>({
   isVerified: { type: Boolean, default: false },
   isAcceptingMessages: { type: Boolean, default: true },
   messages: [MessageSchema],
+  resetToken: { type: String, default: undefined },
+  resetTokenExpiry: { type: Date, default: Date.now() },
 });
 
 // Create the User model

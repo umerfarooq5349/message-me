@@ -1,4 +1,4 @@
-import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
+import { sendVerificationEmail } from "@/helpers/sendVerifyOrResetEmails";
 import dbConnect from "@/lib/dbConnect";
 import { NextRequest } from "next/server";
 import bcrypt from "bcryptjs";
@@ -46,7 +46,12 @@ export async function POST(request: NextRequest) {
       await existingUserWithEmail.save();
       // Send verification email
       try {
-        await sendVerificationEmail(userName, verifyCode, email);
+        await sendVerificationEmail(
+          userName,
+          verifyCode,
+          email,
+          "verification"
+        );
         return sendResponce(true, "Please verify your email.", 201);
       } catch (error) {
         return sendResponce(
@@ -69,7 +74,12 @@ export async function POST(request: NextRequest) {
       await newUser.save();
       // Send verification email
       try {
-        await sendVerificationEmail(userName, verifyCode, email);
+        await sendVerificationEmail(
+          userName,
+          verifyCode,
+          email,
+          "verification"
+        );
         console.log("Verification email sent successfully.");
       } catch (error) {
         console.error("Failed to send verification email:", error);

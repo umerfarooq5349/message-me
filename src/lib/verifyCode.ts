@@ -7,6 +7,9 @@ export const verifyCode = Math.floor(10000 + Math.random() * 90000).toString();
 export const verifyCodeExpiryTime = new Date();
 verifyCodeExpiryTime.setMinutes(verifyCodeExpiryTime.getMinutes() + 30);
 
+export const resetTokenExpiry = new Date();
+resetTokenExpiry.setMinutes(resetTokenExpiry.getMinutes() + 30);
+
 export const handleSignOut = async () => {
   await signIn();
 };
