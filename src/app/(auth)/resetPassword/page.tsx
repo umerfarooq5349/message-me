@@ -109,7 +109,7 @@ const PasswordResetPage: React.FC = () => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense>
       <div className="font-sans min-h-screen flex items-center justify-center bg-gradient-to-br from-[#387478] to-[#3B1E54] p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-6xl w-full p-4 m-4 shadow-lg rounded-md bg-gradient-to-tl from-[#387478]/20 to-[#3B1E54]/30 backdrop-blur-lg">
           {/* Illustration - Display on top for small screens */}
