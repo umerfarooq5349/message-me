@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import AuthProvider from "@/context/authprovider";
 import { Toaster } from "@/components/ui/toaster";
+import { Suspense } from "react";
+import BikeAnimation from "@/components/bikeAnimiation";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,8 +34,21 @@ export default function RootLayout({
       >
         <div className="min-h-screen  bg-gradient-to-br from-[#1F4663] to-[#387478]">
           <AuthProvider>
-            {/* <NavBar /> */}
-            {children}
+            <Suspense
+              fallback={
+                <div className="w-full px-4 py-4 text-center flex flex-col justify-center items-center">
+                  <BikeAnimation
+                    text={"Loading..."}
+                    textColor="text-[#D4A373]"
+                    tireColor="#D4BEE4"
+                    pedalColor="#ecb365"
+                    bodyColor="text-[#D4BEE4]"
+                  />
+                </div>
+              }
+            >
+              {children}
+            </Suspense>
             <Toaster />
           </AuthProvider>
         </div>
