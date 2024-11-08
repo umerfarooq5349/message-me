@@ -42,6 +42,7 @@ const SignInPage = () => {
     try {
       await signIn("credentials", { ...data, redirect: false })
         .then(() => {
+          router.push("/");
           router.replace("/dashboard");
           toast({
             title: "Welcome Back!",
