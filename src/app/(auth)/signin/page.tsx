@@ -48,11 +48,11 @@ const SignInPage = () => {
           description: "Please check your email or password.",
         });
       } else {
-        router.push("/dashboard");
         toast({
           title: "Welcome Back!",
           description: "Sign in successful!",
         });
+        router.replace("/dashboard");
       }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
