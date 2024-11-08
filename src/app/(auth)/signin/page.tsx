@@ -40,20 +40,22 @@ const SignInPage = () => {
     setIsSubmitting(true);
     setLoginError(""); // Reset error state on each submit
     try {
-      const result = await signIn("credentials", { ...data, redirect: false });
-      if (result?.error) {
-        setLoginError("Invalid email or password");
-        toast({
-          title: "Sign In Failed",
-          description: "Please check your email or password.",
+      await signIn("credentials", { ...data, redirect: false })
+        .then(() => {
+          router.replace("/dashboard");
+          toast({
+            title: "Welcome Back!",
+            description: "Sign in successful!",
+          });
+        })
+        .catch(() => {
+          setLoginError("Invalid email or password");
+          toast({
+            title: "Sign In Failed",
+            description: "Please check your email or password.",
+          });
         });
-      } else {
-        toast({
-          title: "Welcome Back!",
-          description: "Sign in successful!",
-        });
-        router.replace("/dashboard");
-      }
+
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
