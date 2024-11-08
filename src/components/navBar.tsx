@@ -25,8 +25,9 @@ export function NavBar() {
         {session && session.user ? (
           <div className="flex items-center gap-4">
             <Button className="bg-transparent text-[#3B1E54] font-semibold py-2 px-4 rounded-lg transition-transform transform hover:bg-transparent shadow-none hover:shadow-none hover:cursor-auto duration-300">
-              Welcome,{" "}
-              <span className="text-[#3B1E54]">{session.user.userName}</span>
+              Dashoard
+              {/* Welcome,{" "}
+              <span className="text-[#3B1E54]">{session.user.userName}</span> */}
             </Button>
             <Button
               className="bg-[#3B1E54] text-[#D4A373] font-semibold py-2 px-4 rounded-lg transition-transform transform hover:bg-[#3B1E54] hover:text-white hover:shadow-md duration-300"

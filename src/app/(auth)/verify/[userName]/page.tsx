@@ -49,7 +49,7 @@ const VerifyUserPage: React.FC<VerifyUserProps> = ({ params }) => {
         verifyCode: data.verifyCode,
       });
       toast({ title: "Congrats! You are verified now" });
-      router.replace("/");
+      router.replace("/signin");
       setVerifyMessage(response.data.message);
     } catch (error) {
       console.log(error);
