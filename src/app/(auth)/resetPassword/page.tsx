@@ -19,14 +19,14 @@ import Image from "next/image";
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { resetPasswordSchema } from "@/schemas/resetPasswordSchema";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import BikeAnimation from "@/components/bikeAnimiation";
 
 const PasswordResetPage: React.FC = () => {
   const [isSettingNewPassword, setIsSettingNewPassword] = useState(false);
   const [verifyingResetLink, setVerifyingResetLink] = useState(true);
   const [message, setMessage] = useState("");
-
+  const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
 
@@ -91,6 +91,7 @@ const PasswordResetPage: React.FC = () => {
         description: "Visit the sign-in page to sign in.",
       });
       console.log(response);
+      router.replace("/signin");
     } catch (error: unknown) {
       const errorMessage =
         error instanceof AxiosError
