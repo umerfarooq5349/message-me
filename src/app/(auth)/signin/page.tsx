@@ -33,26 +33,32 @@ const SignInPage = () => {
     mode: "onChange",
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isDirty, isValid } = form.formState;
-  const isDisabled = !isDirty || !isValid;
+  const isDisabled = isSubmitting || !isValid;
 
   const onSubmit = async (data: z.infer<typeof signinSchema>) => {
     setIsSubmitting(true);
     setLoginError("");
     try {
       const result = await signIn("credentials", { ...data, redirect: false });
-      if (result?.error) {
-        setLoginError("Invalid email or password");
+      if (!result) {
+        toast({
+          title: "Sign In Error",
+          description: "An unexpected error occurred. Please try again.",
+        });
+      } else if (result.error) {
+        setLoginError("Invalid credentials");
         toast({
           title: "Sign In Failed",
-          description: "Please check your email or password.",
+          description: "Please check your credentials.",
         });
       } else {
         toast({
           title: "Welcome Back!",
           description: "Sign in successful!",
         });
-        router.replace("/dashboard"); // Ensure redirect happens only on successful sign-in
+        router.replace("/dashboard");
       }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
@@ -68,7 +74,6 @@ const SignInPage = () => {
   return (
     <div className="font-sans min-h-screen flex items-center justify-center bg-gradient-to-br to-[#3B1E54] from-[#387478] p-6">
       <div className="grid md:grid-cols-2 items-center gap-4 max-w-6xl w-full p-4 m-4 shadow-lg rounded-md bg-[#0D1B2A]/30 backdrop-blur-lg">
-        {/* Right Side - Illustration on Top for Mobile */}
         <div className="flex items-center justify-center p-8 order-1 md:order-2">
           <Image
             src="/static/Tablet login.gif"
@@ -79,8 +84,6 @@ const SignInPage = () => {
             priority
           />
         </div>
-
-        {/* Left Side - Sign In Form */}
         <div className="md:max-w-md w-full px-4 py-4 order-2 md:order-1">
           <h3 className="text-[#ecb365] text-4xl font-extrabold">Sign in</h3>
           <p className="text-sm mt-4 text-gray-300">
@@ -98,7 +101,6 @@ const SignInPage = () => {
               onSubmit={form.handleSubmit(onSubmit)}
               className="mt-6 space-y-4"
             >
-              {/* Email Field */}
               <FormField
                 control={form.control}
                 name="identifier"
@@ -120,7 +122,6 @@ const SignInPage = () => {
                 )}
               />
 
-              {/* Password Field */}
               <FormField
                 control={form.control}
                 name="password"
@@ -133,6 +134,7 @@ const SignInPage = () => {
                       <Input
                         type="password"
                         placeholder="••••••••"
+                        autoComplete="current-password"
                         {...field}
                         className="w-full text-gray-300 text-sm bg-[#1A1A2E] border-b border-[#387478] focus:border-[#ecb365] px-2 py-3 outline-none"
                       />
@@ -142,12 +144,10 @@ const SignInPage = () => {
                 )}
               />
 
-              {/* Login Error */}
               {loginError && (
                 <p className="text-red-500 text-xs mt-2">{loginError}</p>
               )}
 
-              {/* Forgot Password */}
               <div className="flex items-center justify-between mt-4">
                 <Link
                   href="/forgotPassword"
@@ -157,11 +157,10 @@ const SignInPage = () => {
                 </Link>
               </div>
 
-              {/* Submit Button */}
               <Button
                 type="submit"
                 className="w-full shadow-lg py-2.5 px-4 text-sm tracking-wide rounded-md text-white bg-[#ecb365] hover:bg-[#D4A373] focus:outline-none mt-8 transition duration-300"
-                disabled={isSubmitting || isDisabled}
+                disabled={isDisabled}
               >
                 {isSubmitting ? (
                   <LoaderPinwheel className="animate-spin h-5 w-5 mr-2" />
