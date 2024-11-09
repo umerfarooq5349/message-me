@@ -42,8 +42,6 @@ export async function sendVerificationEmail(
     // Render the chosen email template
     const html = await render(emailTemplate!);
 
-    //send email using node mailer....it needs client(browser) to send mails good but only for clients not work is servers
-
     const transporter = nodemailer.createTransport({
       service: "Gmail",
       host: "smtp.gmail.com",
@@ -54,42 +52,13 @@ export async function sendVerificationEmail(
         pass: process.env.GMAIL_APP_PASSWORD,
       },
     });
-
-    // const html = renderToStaticMarkup(
-    //   <VerificationEmail userName={userName} verifyCode={verifyCode} />
-    // );
-
-    // const html = await render(
-    //   VerificationEmail({
-    //     userName,
-    //     verifyCode,
-    //     url,
-    //   })
-    // );
     const mailOptions = {
       from: process.env.GMAIL_ID,
       to: email,
       subject,
       html,
     };
-    transporter.sendMail(mailOptions);
-    //send email using emailjs....it needs client(browser) to send mails good but only for clients not work is servers
-
-    // await emailJs.send(
-    //   process.env.NEXT_EMAILJS_SERVICE_ID!,
-    //   process.env.NEXT_EMAILJS_TEMPLATE_ID!,
-    //   { verifyCode, email },
-    //   process.env.NEXT_EMAILJS_PUBLIC_KEY
-    // );
-
-    //send email useing resend....it needs domain to send out to users
-
-    // await resend.emails.send({
-    //   from: "onboarding@resend.dev",
-    //   to: email,
-    //   subject: "Message Me | Verification code",
-    //   react: VerificationEmail(userName, verifyCode),
-    // });
+    await transporter.sendMail(mailOptions);
     return {
       success: true,
       message: "Verification emaiii\n\n\nil sent successfully (:",
