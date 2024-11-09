@@ -34,7 +34,7 @@ export async function sendVerificationEmail(
     } else if (emailType === "password reset") {
       emailTemplate = PasswordResetEmailTemplate({
         userName,
-        url: `${process.env.RESET_LINK}${url}`,
+        url: `https://be-anonymouse.vercel.app/resetPassword?${url}`,
       });
       subject = "Message Me | Password Reset Request";
     }
