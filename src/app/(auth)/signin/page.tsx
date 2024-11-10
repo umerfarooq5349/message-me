@@ -42,6 +42,7 @@ const SignInPage = () => {
     setLoginError("");
     try {
       const result = await signIn("credentials", { ...data, redirect: false });
+      console.log(result);
       if (!result) {
         toast({
           title: "Sign In Error",
