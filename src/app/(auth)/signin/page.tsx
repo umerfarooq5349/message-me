@@ -59,7 +59,7 @@ const SignInPage = () => {
           title: "Welcome Back!",
           description: "Sign in successful!",
         });
-        router.replace("/dashboard");
+        router.push("/dashboard");
       }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
