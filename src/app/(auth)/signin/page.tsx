@@ -41,7 +41,7 @@ const SignInPage = () => {
     setIsSubmitting(true);
     setLoginError("");
     try {
-      const result = await signIn("credentials", { ...data, redirect: false });
+      const result = await signIn("credentials", data);
       console.log(result);
       if (!result) {
         toast({
