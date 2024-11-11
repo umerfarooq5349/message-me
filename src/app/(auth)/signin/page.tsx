@@ -68,7 +68,7 @@ const SignInPage = () => {
         description: "An error occurred. Please try again.",
       });
     } finally {
-      router.push("/dashboard");
+      // router.push("/dashboard");
       setIsSubmitting(false);
     }
   };
