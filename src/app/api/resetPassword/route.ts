@@ -1,5 +1,5 @@
 import { sendResponce } from "@/lib/sendResponce";
-import { UserModel } from "@/models/user";
+import { UserModel } from "@/models/Message";
 import jwt from "jsonwebtoken";
 import { NextRequest } from "next/server";
 import bcrypt from "bcryptjs";

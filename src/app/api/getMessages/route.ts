@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 
 import dbConnect from "@/lib/dbConnect";
 import { sendResponce } from "@/lib/sendResponce";
-import { UserModel } from "@/models/user";
+import { UserModel } from "@/models/Message";
 import mongoose from "mongoose";
 
 export async function GET() {

@@ -1,7 +1,7 @@
 import { sendVerificationEmail } from "@/helpers/sendVerifyOrResetEmails";
 import dbConnect from "@/lib/dbConnect";
 import { sendResponce } from "@/lib/sendResponce";
-import { UserModel } from "@/models/user";
+import { UserModel } from "@/models/Message";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import { verifyCode } from "@/lib/verifyCode";

@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import { sendResponce } from "@/lib/sendResponce";
-import { UserModel } from "@/models/user";
+import { UserModel } from "@/models/Message";
 import { userNameValidation } from "@/schemas/signUpSchema";
 import { z } from "zod";
 

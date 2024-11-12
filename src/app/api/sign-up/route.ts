@@ -2,7 +2,7 @@ import { sendVerificationEmail } from "@/helpers/sendVerifyOrResetEmails";
 import dbConnect from "@/lib/dbConnect";
 import { NextRequest } from "next/server";
 import bcrypt from "bcryptjs";
-import { UserModel } from "@/models/user";
+import { UserModel } from "@/models/Message";
 import { sendResponce } from "@/lib/sendResponce";
 
 export async function POST(request: NextRequest) {
