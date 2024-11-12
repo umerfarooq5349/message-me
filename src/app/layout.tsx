@@ -29,6 +29,35 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Primary Meta Tags */}
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          name="description"
+          content="Welcome to world on anonymous people where you remain hidden"
+        />
+        <meta name="author" content="Umer Farooq" />
+        <meta
+          name="keywords"
+          content="Umer Farooq, Next.js developer, web design, React developer, front-end developer, portfolio anuonymous,ai,expert"
+        />
+
+        {/* Open Graph / Social Media Preview */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Be Anonymous" />
+        <meta
+          property="og:description"
+          content="Welcome to world on anonymous people where you remain hidden"
+        />
+
+        {/* <meta property="og:image" content="/static/" />
+
+        <meta property="og:image:alt" content="Portfolio of Umer Farooq" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" /> */}
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
