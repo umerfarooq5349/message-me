@@ -37,40 +37,43 @@ const SignInPage = () => {
   const { isDirty, isValid } = form.formState;
   const isDisabled = isSubmitting || !isValid;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubmit = async (data: z.infer<typeof signinSchema>) => {
     setIsSubmitting(true);
     setLoginError("");
-    try {
-      const result = await signIn("credentials", data);
-      console.log(result);
-      if (!result) {
-        toast({
-          title: "Sign In Error",
-          description: "An unexpected error occurred. Please try again.",
-        });
-      } else if (result.error) {
-        setLoginError("Invalid credentials");
-        toast({
-          title: "Sign In Failed",
-          description: "Please check your credentials.",
-        });
-      } else {
-        toast({
-          title: "Welcome Back!",
-          description: "Sign in successful!",
-        });
-        router.push("/dashboard");
-      }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
-      toast({
-        title: "Sign In Error",
-        description: "An error occurred. Please try again.",
-      });
-    } finally {
-      // router.push("/dashboard");
-      setIsSubmitting(false);
-    }
+
+    router.push("/dashboard");
+    // try {
+    //   const result = await signIn("credentials", data);
+    //   console.log(result);
+    //   if (!result) {
+    //     toast({
+    //       title: "Sign In Error",
+    //       description: "An unexpected error occurred. Please try again.",
+    //     });
+    //   } else if (result.error) {
+    //     setLoginError("Invalid credentials");
+    //     toast({
+    //       title: "Sign In Failed",
+    //       description: "Please check your credentials.",
+    //     });
+    //   } else {
+    //     toast({
+    //       title: "Welcome Back!",
+    //       description: "Sign in successful!",
+    //     });
+    //     router.push("/dashboard");
+    //   }
+    //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // } catch (error) {
+    //   toast({
+    //     title: "Sign In Error",
+    //     description: "An error occurred. Please try again.",
+    //   });
+    // } finally {
+    //   // router.push("/dashboard");
+    //   setIsSubmitting(false);
+    // }
   };
 
   return (
