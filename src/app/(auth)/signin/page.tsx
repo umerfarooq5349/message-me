@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -44,6 +43,27 @@ const SignInPage = () => {
     setLoginError("");
 
     router.push("/dashboard");
+
+    try {
+      const signedIn = await signIn("credentials", {
+        ...data,
+        redirectTo: "/dashboard",
+        redirect: false,
+      });
+      toast({
+        title: "Signed In ",
+        description: "you are good to go",
+      });
+      console.log(signedIn);
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Sign In Error",
+        description: "An unexpected error occurred. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
     // try {
     //   const result = await signIn("credentials", data);
     //   console.log(result);
