@@ -11,7 +11,6 @@ const geistSans = localFont({
   variable: "--font-geist-sans",
   weight: "100 900",
 });
-
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -19,15 +18,17 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Be Anonymous - Stay Hidden, Stay Secure",
+  title: "Be Anonymouse",
   description: "Welcome to a world where anonymity reigns.",
-  keywords:
-    "Umer Farooq, Next.js developer, anonymous, web development, portfolio, AI, hidden identity",
+  applicationName: "Be Anonymouse",
+  creator: "Umer Farooq",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
       <head>
@@ -57,29 +58,24 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="min-h-screen bg-gradient-to-br from-[#1F4663] to-[#387478]">
+        <div className="min-h-screen  bg-gradient-to-br from-[#1F4663] to-[#387478]">
           <AuthProvider>
-            <main
-              role="main"
-              className="flex flex-col items-center justify-center"
+            <Suspense
+              fallback={
+                <div className="w-full px-4 py-4 text-center flex flex-col justify-center items-center">
+                  <BikeAnimation
+                    text={"Loading"}
+                    textColor="text-[#3B1E54]"
+                    tireColor="#3B1E54"
+                    pedalColor="#ecb365"
+                    bodyColor="stroke-[#3B1E54]"
+                  />
+                </div>
+              }
             >
-              <Suspense
-                fallback={
-                  <div className="w-full flex flex-col items-center justify-center py-8">
-                    <BikeAnimation
-                      text="Loading..."
-                      textColor="text-[#3B1E54]"
-                      tireColor="#3B1E54"
-                      pedalColor="#ecb365"
-                      bodyColor="stroke-[#3B1E54]"
-                    />
-                  </div>
-                }
-              >
-                {children}
-              </Suspense>
-              <Toaster />
-            </main>
+              {children}
+            </Suspense>
+            <Toaster />
           </AuthProvider>
         </div>
       </body>
