@@ -48,12 +48,18 @@ const SignInPage = () => {
         redirectTo: "/dashboard",
         redirect: false,
       });
-      // router.push("/dashboard");
+      router.push(signedIn?.url || "/signed");
       toast({
         title: "Signed In ",
         description: "you are good to go",
       });
-      console.log(signedIn);
+      if (signedIn?.error) {
+        console.log(signedIn);
+        toast({
+          title: "Sign In Error",
+          description: signedIn.error,
+        });
+      }
     } catch (error) {
       console.log(error);
       toast({
