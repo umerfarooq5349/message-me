@@ -120,10 +120,10 @@ const Dashboard = () => {
     return (
       <BikeAnimation
         text={"Loading"}
-        textColor="text-[#D4A373]"
-        tireColor="#D4BEE4"
+        textColor="text-[#3B1E54]"
+        tireColor="#3B1E54"
         pedalColor="#ecb365"
-        bodyColor="text-[#D4BEE4]"
+        bodyColor="stroke-[#3B1E54]"
       />
     );
   }
@@ -207,8 +207,11 @@ const Dashboard = () => {
         ) : (
           <div className="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center items-center h-full">
             <BikeAnimation
-              text="No messages to show"
+              text={"No message to display!"}
               textColor="text-[#3B1E54]"
+              tireColor="#3B1E54"
+              pedalColor="#ecb365"
+              bodyColor="stroke-[#3B1E54]"
             />
           </div>
         )}

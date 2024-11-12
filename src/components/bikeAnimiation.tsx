@@ -10,10 +10,10 @@ interface BikeAnimationProps {
 
 const BikeAnimation: React.FC<BikeAnimationProps> = ({
   text,
-  textColor = "text-gray-600", // Default color
-  tireColor = "currentColor", // Default to current text color
-  pedalColor = "currentColor", // Default to current text color
-  bodyColor = "", // Default color
+  textColor = "text-[#D4A373]", // Default color
+  tireColor = "#3B1E54", // Default to current text color
+  pedalColor = "#ecb365", // Default to current text color
+  bodyColor = "stroke-[#3B1E54]", // Default color
 }) => {
   return (
     <div className="flex flex-col justify-center items-center">
@@ -67,7 +67,7 @@ const BikeAnimation: React.FC<BikeAnimationProps> = ({
               stroke={tireColor}
             />
             <g
-              className="animate-bikeSpokesSpin"
+              className="animate-bikeSpokesSpin "
               strokeDasharray="31.416 31.416"
               strokeDashoffset="-23.562"
             >
@@ -78,22 +78,22 @@ const BikeAnimation: React.FC<BikeAnimationProps> = ({
 
           {/* Bike body */}
           <polyline
-            className={`stroke-${bodyColor}`}
+            className={`${bodyColor}`}
             points="14 3,18 3"
             strokeDasharray="5 5"
           />
           <polyline
-            className={`stroke-${bodyColor}`}
+            className={`${bodyColor}`}
             points="16 3,24 19,9.5 19,18 8,34 7,24 19"
             strokeDasharray="79 79"
           />
           <path
-            className={`stroke-${bodyColor}`}
+            className={`${bodyColor}`}
             d="m30,2h6s1,0,1,1-1,1-1,1"
             strokeDasharray="10 10"
           />
           <polyline
-            className={`stroke-${bodyColor}`}
+            className={`${bodyColor}`}
             points="32.5 2,38.5 19"
             strokeDasharray="19 19"
           />

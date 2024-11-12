@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -39,7 +40,7 @@ export function MessageCard({
   };
 
   return (
-    <Card className="w-[350px] bg-white rounded-lg shadow-lg p-6">
+    <Card className="w-5/6 bg-white rounded-lg shadow-lg p-6">
       {/* <div className="absolute inset-0 -z-10 opacity-20 pointer-events-none">
         <div className="absolute bg-[#387478] rounded-full h-64 w-64 -top-20 -left-20 blur-3xl" />
         <div className="absolute bg-[#3B1E54] rounded-full h-64 w-64 bottom-10 right-10 blur-3xl" />
@@ -55,7 +56,7 @@ export function MessageCard({
         </CardDescription>
       </CardContent>
 
-      <CardFooter className="flex gap-4">
+      {/* <CardFooter className="flex gap-4">
         <Alert
           description="Are you sure you want to delete this message?"
           title="Delete Message"
@@ -68,7 +69,7 @@ export function MessageCard({
         >
           Update
         </Button>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 }

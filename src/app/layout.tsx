@@ -38,11 +38,11 @@ export default function RootLayout({
               fallback={
                 <div className="w-full px-4 py-4 text-center flex flex-col justify-center items-center">
                   <BikeAnimation
-                    text={"Loading..."}
-                    textColor="text-[#D4A373]"
-                    tireColor="#D4BEE4"
+                    text={"Loading"}
+                    textColor="text-[#3B1E54]"
+                    tireColor="#3B1E54"
                     pedalColor="#ecb365"
-                    bodyColor="text-[#D4BEE4]"
+                    bodyColor="stroke-[#3B1E54]"
                   />
                 </div>
               }

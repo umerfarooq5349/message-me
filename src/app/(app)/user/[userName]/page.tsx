@@ -158,7 +158,7 @@ const SendMessage: React.FC<SendMessageProps> = ({ params }) => {
               textColor="text-[#3B1E54]"
               tireColor="#3B1E54"
               pedalColor="#ecb365"
-              bodyColor="text-[#D4BEE4]"
+              bodyColor="stroke-[#3B1E54]"
             />
           </div>
         ) : (

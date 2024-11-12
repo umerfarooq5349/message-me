@@ -5,11 +5,12 @@ import { Navbar } from "flowbite-react";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
+import Alert from "./alert";
 
 export function NavBar() {
   const { data: session } = useSession();
   const pathName = usePathname();
-  console.log(pathName);
+
   return (
     <Navbar
       rounded
@@ -29,12 +30,19 @@ export function NavBar() {
               {/* Welcome,{" "}
               <span className="text-[#3B1E54]">{session.user.userName}</span> */}
             </Button>
-            <Button
+
+            <Alert
+              description="Are you sure? You want to sign out?"
+              title="Sign out"
+              triggerText="Sign out"
+              onConfirm={() => signOut()}
+            />
+            {/* <Button
               className="bg-[#3B1E54] text-[#D4A373] font-semibold py-2 px-4 rounded-lg transition-transform transform hover:bg-[#3B1E54] hover:text-white hover:shadow-md duration-300"
               onClick={() => signOut()}
             >
               Sign Out
-            </Button>
+            </Button> */}
           </div>
         ) : (
           <div>

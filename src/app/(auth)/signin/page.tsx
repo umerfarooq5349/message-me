@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useToast } from "@/hooks/use-toast";
@@ -21,6 +21,7 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { signinSchema } from "@/schemas/signInSchema";
 import Image from "next/image";
+import { authenticate } from "@/lib/actions";
 
 const SignInPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,10 +34,8 @@ const SignInPage = () => {
     defaultValues: { identifier: "", password: "" },
     mode: "onChange",
   });
-
   const { isDirty, isValid } = form.formState;
   const isDisabled = isSubmitting || !isValid;
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubmit = async (data: z.infer<typeof signinSchema>) => {
     setIsSubmitting(true);
@@ -54,14 +53,13 @@ const SignInPage = () => {
         description: "Sign in successful!",
       });
       if (signedIn?.error) {
-        console.log(signedIn);
         toast({
           title: "Sign In Error",
-          description: signedIn.error,
+          description: "Invalid credentials",
+          variant: "destructive",
         });
       }
     } catch (error) {
-      console.log(error);
       toast({
         title: "Sign In Error",
         description: "An unexpected error occurred. Please try again.",
