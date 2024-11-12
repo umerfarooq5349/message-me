@@ -42,14 +42,13 @@ const SignInPage = () => {
     setIsSubmitting(true);
     setLoginError("");
 
-    router.push("/dashboard");
-
     try {
       const signedIn = await signIn("credentials", {
         ...data,
         redirectTo: "/dashboard",
         redirect: false,
       });
+      // router.push("/dashboard");
       toast({
         title: "Signed In ",
         description: "you are good to go",
