@@ -13,7 +13,7 @@ import bcrypt from "bcryptjs";
 import Credentials from "next-auth/providers/credentials";
 
 import dbConnect from "./lib/dbConnect";
-import { UserModel } from "./models/user";
+import { UserModel } from "./models/Message";
 
 // import authConfig from "./auth.config";
 // import mongoClient from "./lib/db";
@@ -36,7 +36,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       credentials: {
         identifier: {
           label: "Email",
-          type: "email",
+          type: "text",
           placeholder: "example@example.com",
         },
         password: {
@@ -49,7 +49,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           await dbConnect();
           let user = null;
           console.log(credentials);
-          user = await UserModel.findOne({ email: credentials.identifier });
+          user = await UserModel.findOne({
+            $or: [
+              { userName: credentials.identifier },
+              { email: credentials.identifier },
+            ],
+          });
           if (
             !user ||
             !(await bcrypt.compare(
@@ -83,9 +88,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   //   pages: { signIn: "/signIn" },
 
   callbacks: {
-    authorized: async ({ auth }) => {
-      // Logged in users are authenticated, otherwise redirect to login page
-      return !!auth;
+    authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user;
+      const isOnDashboard = nextUrl.pathname.startsWith("/dashboard");
+      if (isOnDashboard) {
+        if (isLoggedIn) return true;
+        return false; // Redirect unauthenticated users to login page
+      } else if (isLoggedIn) {
+        return Response.redirect(new URL("/dashboard", nextUrl));
+      }
+      return true;
     },
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

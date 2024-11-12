@@ -11,6 +11,7 @@ declare module "next-auth" {
     isAcceptingMessage?: boolean;
     avatar?: string;
     userName?: string;
+    password?: string;
     __v?: number;
   }
 

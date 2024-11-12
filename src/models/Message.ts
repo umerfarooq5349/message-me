@@ -75,5 +75,5 @@ const UserSchema = new Schema<User>({
 });
 
 // Create the User model
-export const UserModel: Model<User> =
-  mongoose.models.User || mongoose.model<User>("User", UserSchema);
+export const UserModel =
+  mongoose.models.User || mongoose.model("User", UserSchema);
