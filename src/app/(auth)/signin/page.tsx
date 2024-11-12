@@ -1,3 +1,4 @@
+/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -33,7 +34,6 @@ const SignInPage = () => {
     mode: "onChange",
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isDirty, isValid } = form.formState;
   const isDisabled = isSubmitting || !isValid;
 
