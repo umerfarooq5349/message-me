@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState, Suspense } from "react";
@@ -36,7 +37,7 @@ const PasswordResetPage: React.FC = () => {
       const resetToken = searchParams.get("resetToken");
       if (resetToken) {
         try {
-          const response = await axios.post("/api/resetPassword", {
+          const response = await axios.post("/api/verifyResetPasswordLink", {
             resetToken,
           });
           toast({
@@ -82,15 +83,15 @@ const PasswordResetPage: React.FC = () => {
 
     setIsSettingNewPassword(true);
     try {
-      const response = await axios.post(`/api/resetPassword`, {
+      const response = await axios.post(`/api/setNewPassword`, {
         resetToken,
-        ...data,
+        data,
       });
       toast({
         title: "Password changed",
         description: "Visit the sign-in page to sign in.",
       });
-      console.log(response);
+
       router.replace("/signin");
     } catch (error: unknown) {
       const errorMessage =
@@ -99,7 +100,6 @@ const PasswordResetPage: React.FC = () => {
           : "An error occurred";
       setMessage(errorMessage);
 
-      console.log(error);
       toast({
         description: errorMessage,
         variant: "destructive",

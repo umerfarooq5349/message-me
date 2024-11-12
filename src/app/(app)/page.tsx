@@ -59,9 +59,9 @@ export default function Home() {
         <CarouselNext className="text-[#D4A373] hover:text-white" />
       </Carousel>
 
-      <footer className="mt-8 text-center text-[#D4A373] font-light text-sm md:text-base">
+      {/* <footer className="mt-8 text-center text-[#D4A373] font-light text-sm md:text-base">
         © 2024 - All rights reserved
-      </footer>
+      </footer> */}
     </main>
   );
 }
