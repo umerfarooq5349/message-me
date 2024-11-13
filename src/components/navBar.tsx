@@ -59,7 +59,7 @@ export function NavBar() {
                   router.push("/signup");
                 }}
               >
-                Signup to recive messages
+                Signup to receive messages
               </Button>
             ) : (
               <Button
