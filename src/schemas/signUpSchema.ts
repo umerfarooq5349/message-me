@@ -2,9 +2,12 @@ import { z } from "zod";
 
 export const userNameValidation = z
   .string()
-  .min(3, { message: "User name should be at leate 3 charecters" })
-  .max(15, "User name should not be more then 15 charecters")
-  .regex(/^[a-z0-9_-]+$/, "User name should only contain a-z, 0-9, _, or -");
+  .min(3, { message: "Username must be at least 3 characters." })
+  .max(15, { message: "Username must be no more than 15 characters." })
+  .regex(/^[a-zA-Z0-9_-]+$/, {
+    message:
+      "Username can only contain letters, numbers, underscores, or hyphens.",
+  });
 
 export const signUpSchema = z.object({
   userName: userNameValidation,

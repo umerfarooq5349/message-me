@@ -30,8 +30,8 @@ export const Alert: React.FC<AlertProps> = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className="bg-[#3B1E54] text-[#D4A373] font-semibold py-2 px-4 rounded-lg transition-transform transform hover:bg-[#3B1E54] hover:text-white hover:shadow-md duration-300">
-          {triggerText}
+        <Button className=" bg-transparent text-[#3B1E54]  border-2 border-[#3B1E54]   rounded-lg px-4 py-2 hover:shadow-xl hover:bg-[#ecb365] hover:text-[#3B1E54]  hover:border-[#ecb365] transition duration-500">
+          <LogOut /> {triggerText}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-white dark:bg-gray-800/90 backdrop-blur-md rounded-lg shadow-xl p-6 text-center item-center justify-center max-w-md mx-auto ">
@@ -59,7 +59,7 @@ export const Alert: React.FC<AlertProps> = ({
               onClick={onConfirm}
               className=" bg-transparent text-[#3B1E54]  border-2 border-[#3B1E54]   rounded-lg px-4 py-2 hover:shadow-xl hover:font-bold  hover:bg-transparent transition duration-500"
             >
-              <LogOut></LogOut> Delete
+              <LogOut /> Signout
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
