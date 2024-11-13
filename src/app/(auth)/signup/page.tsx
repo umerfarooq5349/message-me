@@ -51,9 +51,11 @@ const SignUpPage = () => {
         );
         setUserNameMessage(response.data.message);
       } catch (error) {
+        console.log(error);
         const errorMessage =
           error instanceof AxiosError
-            ? error.response?.data?.message || "Username check error"
+            ? error.response?.data?.data?.error.issues[0].message ||
+              "Username check error"
             : "An error occurred";
         setUserNameMessage(errorMessage);
       } finally {
