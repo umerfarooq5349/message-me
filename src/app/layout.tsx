@@ -53,15 +53,15 @@ export default function RootLayout({
           content="Welcome to a world where anonymity reigns."
         />
         <meta
-          property="og:image"
+          property="og:image/gif"
           content="https://be-anonymouse.vercel.app/static/Feedback.gif"
         />
         <meta
           property="og:image:alt"
           content="Animated hero of hidden identity"
         />
-        <meta property="og:image:width" content="500" />
-        <meta property="og:image:height" content="500" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
