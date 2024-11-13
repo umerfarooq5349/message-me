@@ -22,6 +22,11 @@ export const metadata: Metadata = {
   description: "Welcome to a world where anonymity reigns.",
   applicationName: "Be Anonymouse",
   creator: "Umer Farooq",
+  openGraph: {
+    emails: "mumerfarooq557@gmail.com",
+    creators: "https://umer-far-ooq-portfolio.vercel.app/",
+    url: "https://be-anonymouse.vercel.app/static/Feedback.gif",
+  },
 };
 
 export default function RootLayout({
@@ -47,7 +52,10 @@ export default function RootLayout({
           property="og:description"
           content="Welcome to a world where anonymity reigns."
         />
-        <meta property="og:image" content="/static/Feedback.gif" />
+        <meta
+          property="og:image"
+          content="https://be-anonymouse.vercel.app/static/Feedback.gif"
+        />
         <meta
           property="og:image:alt"
           content="Animated hero of hidden identity"
