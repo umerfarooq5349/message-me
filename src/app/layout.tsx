@@ -52,8 +52,8 @@ export default function RootLayout({
           property="og:image:alt"
           content="Animated hero of hidden identity"
         />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
+        <meta property="og:image:width" content="500" />
+        <meta property="og:image:height" content="500" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
