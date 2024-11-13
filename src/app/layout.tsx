@@ -18,21 +18,14 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Be Anonymouse | Stay Anonymous",
-  description:
-    "Be Anonymouse offers secure, anonymous browsing, protecting your privacy and online identity. Stay hidden, stay safe with our platform.",
+  title: "Be Anonymouse",
+  description: "Welcome to a world where anonymity reigns.",
   applicationName: "Be Anonymouse",
   creator: "Umer Farooq",
-  keywords:
-    "online anonymity, secure browsing, privacy protection, anonymous online, stay hidden online",
   openGraph: {
-    type: "website",
-    title: "Be Anonymouse | Stay Anonymous",
-    description: "Experience ultimate online anonymity with Be Anonymouse.",
-    images: "https://be-anonymouse.vercel.app/static/Feedback.gif",
-    // images: "Animated hero of anonymous online identity - Secure and private browsing",
-    // imageWidth: 1200,
-    // imageHeight: 630,
+    emails: "mumerfarooq557@gmail.com",
+    creators: "https://umer-far-ooq-portfolio.vercel.app/",
+    url: "https://be-anonymouse.vercel.app/static/Feedback.gif",
   },
 };
 
@@ -48,28 +41,28 @@ export default function RootLayout({
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="author" content="Umer Farooq" />
-        <meta
-          name="keywords"
-          content="online anonymity, secure browsing, privacy protection, anonymous online, stay hidden online"
-        />
 
         {/* Open Graph / Social Media Preview */}
         <meta property="og:type" content="website" />
         <meta
           property="og:title"
-          content="Be Anonymouse | Stay Anonymous and Secure Online"
+          content="Be Anonymous - Stay Hidden, Stay Secure"
         />
         <meta
           property="og:description"
-          content="Experience ultimate online anonymity with Be Anonymouse. Your privacy is our priority."
+          content="Welcome to a world where anonymity reigns."
         />
+        {/* <meta
+          property="og:image"
+          content="https://be-anonymouse.vercel.app/static/be-anonymous.png"
+        /> */}
         <meta
           property="og:image"
           content="https://be-anonymouse.vercel.app/static/Feedback.gif"
         />
         <meta
           property="og:image:alt"
-          content="Animated hero of anonymous online identity - Secure and private browsing"
+          content="Animated hero of hidden identity"
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
