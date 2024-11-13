@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     emails: "mumerfarooq557@gmail.com",
     creators: "https://umer-far-ooq-portfolio.vercel.app/",
-    url: "https://be-anonymouse.vercel.app/static/Feedback.gif",
+    url: "https://be-anonymouse.vercel.app/static/Feedback.png",
   },
 };
 
@@ -58,7 +58,7 @@ export default function RootLayout({
         /> */}
         <meta
           property="og:image"
-          content="https://be-anonymouse.vercel.app/static/Feedback.gif"
+          content="https://be-anonymouse.vercel.app/static/Feedback.png"
         />
         <meta
           property="og:image:alt"
