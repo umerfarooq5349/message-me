@@ -38,7 +38,7 @@ const VerifyUserPage: React.FC<VerifyUserProps> = ({ params }) => {
     defaultValues: { verifyCode: "" },
   });
   const { isValid } = form.formState;
-
+  const isDisabled = isVerifyingCode || !isValid;
   const onSubmit = async (data: z.infer<typeof verifySchema>) => {
     setIsVerifyingCode(true);
 
@@ -129,7 +129,7 @@ const VerifyUserPage: React.FC<VerifyUserProps> = ({ params }) => {
               <Button
                 type="submit"
                 className="w-full shadow-lg py-2 px-4 text-sm tracking-wide rounded-md text-white bg-[#ecb365] hover:bg-[#D4A373] focus:outline-none mt-4 sm:mt-8 transition duration-300"
-                disabled={isVerifyingCode || isValid}
+                disabled={isDisabled}
               >
                 {isVerifyingCode ? (
                   <LoaderPinwheel className="animate-spin h-5 w-5 sm:h-6 sm:w-6 mr-2" />
