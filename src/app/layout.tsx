@@ -53,9 +53,13 @@ export default function RootLayout({
           content="Welcome to a world where anonymity reigns."
         />
         <meta
+          property="og:image"
+          content="https://be-anonymouse.vercel.app/static/be-anonymous.png"
+        />
+        {/* <meta
           property="og:image/gif"
           content="https://be-anonymouse.vercel.app/static/Feedback.gif"
-        />
+        /> */}
         <meta
           property="og:image:alt"
           content="Animated hero of hidden identity"
