@@ -10,7 +10,7 @@ const groq = createGroq({
 
 export async function GET() {
   //   const { messages } = await req.json();
-  const model = groq("llama3-8b-8192");
+  const model = groq("deepseek-r1-distill-qwen-32b");
   try {
     const response = await generateText({
       model: model,
